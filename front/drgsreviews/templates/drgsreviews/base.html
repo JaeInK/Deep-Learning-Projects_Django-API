@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+
+{% block project-name %}Drugs Review Score Prediction {% endblock %}
+{% block nav-drgsreviews %} active {% endblock %}
+
+{% block nav-v-items %}
+<a class="nav-item nav-link {% block nav-about %}{% endblock %}" href="{% url 'drgsreviews/about' %}">About</a>
+<a class="nav-item nav-link {% block nav-howtouse %}{% endblock %}" href="{% url 'drgsreviews/howtouse' %}">How to Use</a>
+<a class="nav-item nav-link {% block nav-demo %}{% endblock %}" href="{% url 'drgsreviews/demo' %}">Demo</a>
+{% endblock %}
+

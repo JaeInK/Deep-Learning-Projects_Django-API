@@ -1,0 +1,84 @@
+<!doctype html>
+{% load staticfiles %}
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/select.css' %}">
+  </head>
+  <body>
+
+  <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+	<a class="navbar-brand" href="/home/">DELab</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+	  <div class="nav-item nav-link"></div>
+      <a class="nav-item nav-link" href="/drgsreviews/about/">About </a>
+      <a class="nav-item nav-link active" href="#">Demo</a>
+    </div>
+  </div>
+  </nav>
+
+    <div class="container col-md-offset-4 col-md-3">
+        <br>
+        <form id="drgsform" method="POST" class="post-form" get-data-url="{% url 'drgsreviews/get_data' %}" >{% csrf_token %}
+         <div class="form-group">
+		  <label for="user">User</label><br>
+		  {{ form.user }}
+		 </div>
+		 <div class="form-group">
+		  <label for="drug">Drug</label><br>
+		  {{ form.drug }}
+		 </div>
+	     <div class="form-group">
+		  <label for="Textarea">Review</label><br>
+		  {{ form.review }}
+		 </div>
+		 <div class="form-group">
+		  <label for="sentiment">Sentiment</label><br>
+		  {{ form.sentiment }}
+		 </div>
+		 <div class="form-group">
+		  <label for="predict">Predict</label><br>
+		  {{ form.predict }}
+		 </div>
+
+		<button type="button", id="get_data", class="btn btn-success">Get Data</button>       
+		<button type="submit" class="save btn btn-dark"> Run</button>
+        </form>
+      </div>
+
+      <script>
+          $("#get_data").click(function() {
+            var form = $("#drgsform");
+            $.ajax({
+              type: 'POST',
+              url: form.attr("get-data-url"),
+              data: form.serialize(),
+              dataType: 'json',
+              success: function(data){
+                $("textarea").val(data.test_review);
+                $("[name=user]").attr("value", data.test_user);
+                $("[name=drug]").attr("value", data.test_drug);
+                $("[name=sentiment]").attr("value", data.test_sentiment);
+                $("[name=predict]").attr("value", data.predict);
+              }
+            });
+          });
+          $(document).ready(function() {
+            $("textarea").prop("readonly", true);
+            $("[name=user]").prop("readonly", true);
+            $("[name=drug]").prop("readonly", true);
+            $("[name=sentiment]").prop("readonly", true);
+            $("[name=predict]").prop("readonly", true);
+          });
+        </script>
+  </body>
+</html>

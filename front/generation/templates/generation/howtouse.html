@@ -1,0 +1,21 @@
+{% extends 'generation/base.html' %}
+{% load staticfiles %}
+
+{% block nav-howtouse %} active {% endblock %}
+
+{% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="card my-3 mx-5">
+    <div class='card-body'>
+      <h5 class="text-center mb-3">
+        <dt>프로그램 사용법 (How to Use)</dt>
+      </h5>
+      <div class="d-flex flex-column">
+        <p>1. 문장을 시작하려는 하나의 형태소를 입력</p>
+        <p>2. ex) 입력 : 나</p>
+        <p>3. 출력 : 나는 밥을 먹었다</p>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

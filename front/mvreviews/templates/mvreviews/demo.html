@@ -1,0 +1,85 @@
+{% extends 'mvreviews/base.html' %}
+{% load staticfiles %}
+
+{% block nav-demo %} active {% endblock %}
+
+{% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="card my-3 mx-5">
+    <div class='card-body'>
+      <form id="mvform" method="post" get-data-url="{% url 'mvreviews/get_data'%}">
+        {% csrf_token %}
+        <div class="form-group row">
+          <label for="review" class="col-md-3">Review</label>
+          <div class="col-md-3">{{ form.review }}</div>
+          <span class="text-danger">Temporarily Unavailable</span>
+        </div>
+        <div class="form-group row">
+          <label for="movie_id" class="col-md-3">Movie Name</label>
+          <div class="col-md-3">{{ form.movie_id }}</div>
+        </div>
+        <div class="form-group row">
+          <label for="y_label" class="col-md-3">Score</label>
+          <div class="col-md-3">{{ form.y_label }}</div>
+        </div>
+        <button type="button" id="get_data" class="btn btn-success offset-md-3">Get Data</button>
+        <button type="submit" class="save btn btn-dark"> Run</button>
+      </form>
+      
+      <!-- RESULTS -->
+      
+      <div class="mt-3">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Model</th>
+              <th scope="col">Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Original</td>
+              <td>{{ y_label }}</td>
+            </tr>
+            <tr>
+              <td>Hierarchical Attention Networks</td>
+              <td>{{ res.pred_han }}</td>
+            </tr>
+            <tr>
+              <td>CNN-LSTM Hierarchical Attention Networks</td>
+              <td>{{ res.pred_cnn_lstm }}</td>
+            </tr>
+            <tr>
+              <td>CNN-CNN Hierarchical Attention Networks</td>
+              <td>{{ res.pred_cnn_cnn }}</td>
+            </tr>     
+            <tr>
+              <td>Product Attention Networks</td>
+              <td>{{ res.pred_pa }}</td>
+            </tr>                               
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  $("#get_data").click(function () {
+    var form = $("#mvform");
+    $.ajax({
+      type: 'POST',
+      url: form.attr("get-data-url"),
+      data: form.serialize(),
+      dataType: 'json',
+      success: function (data) {
+        $("textarea").val(data.review);
+          // .prop("readonly", true);
+        $("[name=movie_id]").attr("value", data.product);
+          // .prop("readonly", true);
+        $("[name=y_label]").attr("value", data.label);
+          // .prop("readonly", true);
+      }
+    });
+  });
+</script>
+{% endblock %}

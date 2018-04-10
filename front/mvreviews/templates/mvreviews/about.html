@@ -1,0 +1,112 @@
+{% extends 'mvreviews/base.html' %} {% load staticfiles %} {% block nav-about %} active {% endblock %} {% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="card my-3 mx-5">
+    <div class='card-body'>
+      <div>
+        <h5 class='text-center mb-3'>
+          <dt>영화 평점 예측 프로그램 (Movie Review Score Prediction Program)</dt>
+        </h5>
+        <p>
+          딥러닝 감성 분석은 사용자 리뷰와 평점 쌍의 데이터를 학습하여, 자동적으로 사용자의 영화 리뷰 평점을 예측하는 프로그램이다. 이 프로젝트에서는 연구자들 사이에서 벤치마크로 사용하는 공개된 데이터셋을 사용하였다.</p>
+        <p> 데이터셋은 Tang et al(2015)에서 공개한 text classification 데이터셋 중 IMDB 영화 리뷰를 이용하였다. 전체 데이터셋의 80%를 학습 데이터, 10%를 검증 데이터, 나머지
+          10%를 테스트 데이터로 나누어 사용하였다. 데이터셋은 다음 링크에서 다운받을 수 있다. (http://ir.hit.edu.cn/~dytang/paper/acl2015/dataset.7z)</p>
+        <p>
+          이 데이터셋은 Tang et al(2015)가 공개한 것으로 후속 감성 분석 연구에서 널리 사용되고 있다.이 프로젝트에서는 Hierarchical Attention Networks(Yang et al, 2016)을 기본 모델로 하여, 여기서 여러가지 변형한 모델을 실험적으로 사용하였다. 기본 모델 포함 모든 모델은 문헌의 계층적인 구조를 가정한다. 단어가 합쳐 문장이 되고, 여러 문장이 합쳐 문헌이 되는 것이다.
+        </p>
+      </div>
+
+      <!-- Section 1. HAN -->
+      <div class="mt-5">
+        <h5 class='text-center mb-3'>
+          <dt>1. Hierarchical Attention Networks</dt>
+        </h5>
+        <div class="d-flex flex-row">
+          <div class="text-center mb-3 col-md-6">
+            <a href="{% static 'images/han.jpg' %}">
+              <img src="{% static 'images/han.jpg' %}" class="img-thumbnail w-50">
+            </a>
+          </div>
+          <div class="col-md-6 my-auto">
+            <p>Hierarchical Attention Networks(Yang, Zichao, et al, 2016)은 문헌을 단어 단위, 문장 단위로 LSTM을 계층적으로 적용한 모델이다.</p>
+            <p>문장의 단어를 LSTM을 통하여 encoding하고, classification에 중요한 단어에 높은 가중치를 부여하여 문장 벡터를 만들어낸다. 문장을 벡터로 만드는 것도 마찬가지로 각 문장을 LSTM에
+              통과시키고 각 hidden state에 attention 가중치를 주어 document vector로 만들어 최종 분류를 하는 모델이다.</p>
+            <p>분류에 중요한 단어, 문장에 높은 가중치를 부여하여 분류의 정확도를 높인 것이 이 모델의 장점이다. 최종적으로 사용자로부터 영화리뷰를 입력 받아 평점을 예측한다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2. CNN_LSTM -->
+      <div class="mt-5">
+        <h5 class='text-center mb-3'>
+          <dt>2. CNN-LSTM Hierarchical Attention Networks</dt>
+        </h5>
+        <div class="d-flex flex-row">
+          <div class="text-center mb-3 col-md-6">
+            <a href="{% static 'images/cnn_lstm.jpg' %}">
+              <img src="{% static 'images/cnn_lstm.jpg' %}" class="img-thumbnail w-50">
+            </a>
+          </div>
+          <div class="col-md-6 my-auto">
+            <p>각 문장의 단어 벡터를 모아 2차원 행렬을 만들고 여러 사이즈의 convolution filter를 적용하여 feature map을 만든다.</p>
+            <p>Convolution을 통해 n-gram 정보를 encoding하는 효과를 볼 수 있으며, LSTM에 비해 적은 수의 parameter를 사용하면서 빠른 연산이 수행 가능하다.</p>
+            <p>Convolution에 의해서 얻은 feature map을 합쳐 문장 벡터로 만들고 이를 LSTM 층에 입력으로 넣는다.</p>
+            <p>문장 단위에서는 앞서 언급된 HAN과 동일한 연산을 수행한다. 최종적으로 영화리뷰를 입력 받아 평점을 예측한다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3. CNN_CNN -->
+      <div class="mt-5">
+        <h5 class='text-center mb-3'>
+          <dt>3. CNN-CNN Hierarchical Attention Networks</dt>
+        </h5>
+        <div class="d-flex flex-row">
+          <div class="text-center mb-3 col-md-6">
+            <a href="{% static 'images/cnn_cnn.jpg' %}">
+              <img src="{% static 'images/cnn_cnn.jpg' %}" class="img-thumbnail w-50">
+            </a>
+          </div>
+          <div class="col-md-6 my-auto">
+            <p>각 문장의 단어 벡터를 모아 2차원 행렬을 만들고 여러 사이즈의 convolution filter를 적용하여 feature map을 만든다.</p>
+            <p>Convolution을 통해 n-gram 정보를 encoding하는 효과를 볼 수 있으며, LSTM에 비해 적은 수의 parameter를 사용하면서 빠른 연산이 수행 가능하다.</p>
+            <p>Convolution에 의해서 얻은 feature map을 합쳐 각각의 문장을 벡터로 만든다. 이를 모두 합쳐 다시 convolution을 적용하여 문헌 벡터로 표현한다. 최종적으로 영화리뷰를 입력
+              받아 평점을 예측한다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4. PA -->
+      <div class="mt-5">
+        <h5 class='text-center mb-3'>
+          <dt>4. Product Attention Networks</dt>
+        </h5>
+        <div class="d-flex flex-row">
+          <div class="text-center mb-3 col-md-6">
+            <a href="{% static 'images/pa.jpg' %}">
+              <img src="{% static 'images/pa.jpg' %}" class="img-thumbnail w-50">
+            </a>
+          </div>
+          <div class="col-md-6 my-auto">
+            <p>Hierarchical Attention Networks과 유사한 구조로, 단어 단위와 문장 단위에 LSTM을 계층적으로 적용한 모델이다.</p>
+            <p>차이점은 단어 단위와 문장 단위에서 attention을 줄 때, 제품(영화)마다 다른 가중치를 주는 것이다. 같은 단어와 문장일지라도, 영화마다 쓰임이 다를 것이라는 가정하에 설계된 모델이다.</p>
+            <p>이전 모델보다 분류 정확도가 향상되었다. 최종적으로 영화리뷰와 영화제목을 입력 받아 평점을 예측한다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+<!-- Use one column -->
+<!-- <div class="mt-5">
+            <h5 class='mb-3'>
+                <dt>1. Hierarchical Attention Networks</dt>
+              </h5>
+              <div class="text-center mb-3">
+                <img src="{% static 'images/han.jpg' %}" class="img-thumbnail w-25">                  
+                </div>
+              <p>Hierarchical Attention Networks(Yang, Zichao, et al, 2016)은 문헌을 단어 단위, 문장 단위로 LSTM을 계층적으로 적용한 모델이다.</p>
+              <p>문장의 단어를 LSTM을 통하여 encoding하고, classification에 중요한 단어에 높은 가중치를 부여하여 문장 벡터를 만들어낸다. 문장을 벡터로 만드는 것도 마찬가지로 각 문장을 LSTM에 통과시키고 각 hidden state에 attention 가중치를 주어 document vector로 만들어 최종 분류를 하는 모델이다.</p>
+              <p>분류에 중요한 단어, 문장에 높은 가중치를 부여하여 분류의 정확도를 높인 것이 이 모델의 장점이다. 최종적으로 사용자로부터 영화리뷰를 입력 받아 평점을 예측한다.</p>
+        </div> -->

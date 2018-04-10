@@ -1,0 +1,11 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+
+{% block project-name %}Movie Review Score Prediction{% endblock %}
+{% block nav-mvreviews %} active {% endblock %}
+
+{% block nav-v-items %}
+<a class="nav-item nav-link {% block nav-about %}{% endblock %}" href="{% url 'mvreviews/about' %}">About</a>
+<a class="nav-item nav-link {% block nav-howtouse %}{% endblock %}" href="{% url 'mvreviews/howtouse' %}">How to Use</a>
+<a class="nav-item nav-link {% block nav-demo %}{% endblock %}" href="{% url 'mvreviews/demo' %}">Demo</a>
+{% endblock %}

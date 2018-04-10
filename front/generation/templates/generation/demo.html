@@ -1,0 +1,30 @@
+{% extends 'generation/base.html' %}
+{% load staticfiles %}
+
+{% block nav-demo %} active {% endblock %}
+
+{% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="card my-3 mx-5">
+    <div class='card-body'>
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+        <div class="form-group row">
+          <label for="word" class="col-md-3">Word</label>
+          <div class="col-md-3">{{ form.word }}</div>
+        </div>
+        <div class="form-group row">
+          <label for="output" class="col-md-3">output</label>
+          <div class="col-md-3">{{ form.output }}</div>
+        </div>
+        <button type="submit" class="save btn btn-dark offset-md-3">Run</button>
+      </form>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $("[name=output]").prop("readonly", true);
+      });
+    </script>
+</main>
+
+{% endblock %}

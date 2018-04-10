@@ -1,0 +1,21 @@
+{% extends 'mvreviews/base.html' %}
+{% load staticfiles %}
+
+{% block nav-howtouse %} active {% endblock %}
+
+{% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="card my-3 mx-5">
+    <div class='card-body'>
+      <h5 class="text-center mb-3">
+        <dt>프로그램 사용법 (How to Use)</dt>
+      </h5>
+      <ol>
+        <li class="mb-3">Get Data 버튼을 눌러서 테스트 데이터 중 랜덤으로 하나를 불러오거나 사용자가 직접 리뷰 텍스트를 입력한다.</li>
+        <li class="mb-3">Run 버튼을 누르면 학습된 네트워크가 평점을 예측한다.</li>
+        <li class="mb-3">실제 평점과 예측 평점을 비교한다.</li>
+      </ol>
+    </div>
+  </div>
+</main>
+{% endblock %}

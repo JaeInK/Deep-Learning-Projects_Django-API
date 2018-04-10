@@ -1,0 +1,84 @@
+{% extends 'drgsreviews/base.html'%}
+{% load staticfiles %}
+
+{% block nav-demo %}active{% endblock %}
+
+{% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+  <div class="card my-3 mx-5">
+    <div class='card-body'>
+        <form id="drgsform" method="POST" class="post-form" get-data-url="{% url 'drgsreviews/get_data' %}">
+          {% csrf_token %}
+          <div class="form-group row">
+            <label for="user" class="col-md-3 col-lg-3">User</label>
+            <div class="col-md-3 col-lg-3">{{ form.user }}</div> 
+            <button type="button" id="get_upid" class="btn btn-success">Get Random User/Drug</button>
+          </div>
+          <div class="form-group row">
+            <label for="drug" class="col-md-3">Drug</label>
+            <div class="col-md-3">{{ form.drug }}</div>
+            <span class="text-danger">{{ warn }}</span>
+          </div>
+          <div class="form-group row">
+            <label for="Textarea" class="col-md-3">Review</label>
+            <div class="col-md-3">{{ form.review }}</div>
+          </div>
+          <div class="form-group row">
+            <label for="sentiment" class="col-md-3">Sentiment</label>
+            <div class="col-md-3">{{ form.sentiment }}</div>
+          </div>
+          <div class="form-group row">
+            <label for="predict" class="col-md-3">Predict</label>
+            <div class="col-md-3">{{ form.predict }}</div> 
+          </div>
+          <button type="button" id="get_data" class="btn btn-success offset-md-3">Get Data</button>
+          <button type="submit" class="save btn btn-dark"> Run</button>
+        </form>
+    </div>
+</main>
+<script>
+  $("#get_data").click(function () {
+    var form = $("#drgsform");
+    $.ajax({
+      type: 'POST',
+      url: form.attr("get-data-url"),
+      data: form.serialize(),
+      dataType: 'json',
+      success: function (data) {
+        $("[name=predict]").attr("value", "");
+        $("textarea").val(data.test_review)
+          .prop("readonly", true);
+        $("[name=user]").attr("value", data.test_user);
+        $("[name=drug]").attr("value", data.test_drug);
+        $("[name=sentiment]").attr("value", data.test_sentiment);
+        // $("[name=predict]").attr("value", data.predict);
+      }
+    });
+  });
+  $(document).ready(function () {
+    // $("textarea").prop("readonly", true);
+    $("[name=user]").prop("readonly", true);
+    $("[name=drug]").prop("readonly", true);
+    $("[name=sentiment]").prop("readonly", true);
+    $("[name=predict]").prop("readonly", true);
+  });
+  $("#get_upid").click(function () {
+    var form = $("#drgsform");
+    $.ajax({
+      type: 'POST',
+      url: form.attr("get-data-url"),
+      data: form.serialize(),
+      dataType: 'json',
+      success: function (data) {
+        $("[name=predict]").attr("value", "");
+        // $("textarea").val(data.test_review)
+          // .prop("readonly", true);
+        $("[name=user]").attr("value", data.test_user);
+        $("[name=drug]").attr("value", data.test_drug);
+        // $("[name=sentiment]").attr("value", data.test_sentiment);
+        // $("[name=predict]").attr("value", data.predict);
+      }
+    });
+  });
+</script>
+{% endblock %}

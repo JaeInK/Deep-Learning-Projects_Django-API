@@ -1,0 +1,11 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+
+{% block project-name %}Text Generation{% endblock %}
+{% block nav-generation %} active {% endblock %}
+
+{% block nav-v-items %}
+<a class="nav-item nav-link {% block nav-about %}{% endblock %}" href="{% url 'generation/about' %}">About</a>
+<a class="nav-item nav-link {% block nav-howtouse %}{% endblock %}" href="{% url 'generation/howtouse' %}">How to Use</a>
+<a class="nav-item nav-link {% block nav-demo %}{% endblock %}" href="{% url 'generation/demo' %}">Demo</a>
+{% endblock %}

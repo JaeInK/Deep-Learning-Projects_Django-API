@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <link href="{% static 'src/netjsongraph.css' %}" rel="stylesheet">
+        <!-- theme can be easily customized via css -->
+        <link href="{% static 'src/netjsongraph-theme.css' %}" rel="stylesheet">
+        <style>
+          body{ overflow: hidden }
+          .njg-tooltip {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 14px
+            }  /* label text on network */
+          .njg-node.Positive{ fill: #3182bd }
+          .njg-node.Neutral{ fill: #009900 }
+          .njg-node.Negative{ fill: #cc3300 }
+          .njg-link{ stroke-width: 3px;
+            stroke: #cccccc }
+          .njg-link.Strong { stroke-width: 3px;
+            stroke: #1e72ae;
+            stroke-opacity: 0.4 !important }
+          .njg-link:hover,.njg-link.njg-open{
+              stroke-width: 5px !important;
+              stroke-opacity: 0.7 !important
+          }
+          /* legend */
+          #legend{
+              position: absolute;
+              top: auto;
+              left: 5px;
+              bottom: 5px;
+              width: auto;
+              height: auto;
+              max-width: 250px;
+              padding: 0 15px;
+              background: #fbfbfb;
+              border-radius: 2px;
+              border: 1px solid #ccc;
+              color: #6d6357;
+              font-family: Arial, sans-serif;
+              font-family: sans-serif;
+              font-size: 14px;
+          }
+          #legend p{ line-height: 16px; margin: 10px 0 }
+          #legend span{
+              width: 16px;
+              margin-right: 5px;
+          }
+          #legend span.circle{
+              display: inline-block;
+              border-radius: 50%;
+              height: 16px;
+          }
+          #legend .Positive{ background-color: #3182bd }
+          #legend .Neutral{ background-color: #009900 }
+          #legend .Negative{ background-color: #cc3300 }
+
+        </style>
+    </head>
+    <body>
+        <div id="legend">
+          <p><span class="circle Negative">&nbsp;</span> Negative node</p>
+          <p><span class="circle Neutral">&nbsp;</span> Neutral node</p>
+          <p><span class="circle Positive">&nbsp;</span> Positive node</p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="{% static 'src/netjsongraph-mod.js' %}"></script>
+        <!-- <script src="{% static 'src/netjsongraph.js' %}"></script> -->
+        <script>
+            var netdata = "{{ netdata_json }}";
+            netdata = netdata.replace(/&quot;/g, '"');
+            netdata = JSON.parse(netdata);
+
+            d3.netJsonGraph(netdata, {
+              linkDistance: 130,
+              charge: -500,
+              defaultStyle: false,
+              circleRadius: 12,
+              nodeClassProperty: "Polarity",
+              linkClassProperty: "type"
+            });
+            // d3.netJsonGraph("./data/netjson-custom.json", {
+            //     linkDistance: 150,
+            //     charge: -200,
+            //     circleRadius: 12,
+            //     defaultStyle: false,
+            //     linkClassProperty: "type",
+            //     nodeClassProperty: "gateway",
+            //     labelDy: "-1.8em"
+            // });
+        </script>
+        <!-- {{ netdata_json }} -->
+    </body>
+</html>

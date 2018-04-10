@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+
+{% block project-name %}News Source Networks {% endblock %}
+{% block nav-newsnetworks %} active {% endblock %}
+
+{% block nav-v-items %}
+<a class="nav-item nav-link {% block nav-about %}{% endblock %}" href="{% url 'newsnetworks/about' %}">About</a>
+<a class="nav-item nav-link {% block nav-howtouse %}{% endblock %}" href="{% url 'newsnetworks/howtouse' %}">How to Use</a>
+<a class="nav-item nav-link {% block nav-demo %}{% endblock %}" href="{% url 'newsnetworks/demo' %}">Demo</a>
+{% endblock %}
+

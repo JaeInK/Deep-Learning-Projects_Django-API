@@ -1,0 +1,41 @@
+{% extends 'drgsreviews/base.html'%}
+{% load staticfiles %}
+
+{% block nav-about %}active{% endblock %}
+
+{% block main %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+	<div class="text-center my-3">
+		<img src="{% static 'images/review.png' %}" class="img-thumbnail w-75">
+	</div>
+	<div class="card my-3 mx-5">
+		<div class='card-body'>
+			<h5 class='text-center mb-3'>
+				<dt>약품 리뷰의 평점 예측 프로그램 (Drugs Review Score Prediction Program)</dt>
+			</h5>
+			<p>약품 리뷰의 평점 예측 프로그램은 딥러닝 기반의 감정 분석 기법을 활용하여, 사용자가 입력하는 특정 약품에 대한 리뷰를 1-10사이의 평점으로 예측하여 주는 프로그램이다.</p>
+			<p>의약품 정보 사이트 Drugs.com은 24,000개 이상의 제품에 대한 리뷰를 제공하며 사용자가 찾는 제품들의 평점을 비교할 수 있다. 하지만 모든 리뷰에 대해서 평점이 존재하는 것은 아니다. 이러한 평점 없이
+				낭비되는 리뷰에 대해서 작성자와 제품에 대한 정보를 반영해 평점을 예측하고, 예측한 평점을 활용하여 각 약품의 평균 평점의 정확도를 높이는 것이 본 프로그램의 목적이다. 더 나아가, 이 데이터를 약품과 증상의
+				관계를 나타내는 하나의 지표로 활용하거나, 약품 수요를 예측하는데 정확도를 높이는데 사용할 수 있다.</p>
+			<p>프로그램에서 사용하는 딥러닝 모델은 Hierarchical LSTM 모델에 UPA(User Product Attention) 메커니즘을 접목시킨 구조로, 사용자와 약품 별 가중치를 학습하고, 이를 기반으로 사용자의
+				주관성까지 반영할 수 있어 평점 예측의 정확성을 높일 수 있다.</p>
+		</div>
+		<div class="mt-5">
+			<!-- must have 'mt-5' in second division for enough spacing in margin top-->
+			<h5 class='text-center mb-3'>
+				<dt>프로젝트 개요 (Project Overveiw)</dt>
+			</h5>
+			<p>1. 데이터 수집</p>
+			<ul>
+			  <li>의약품 정보 사이트 : Drugs.com</li>
+			  <li>Drugs.com 내의 top100 Drugs에 대한 사용자들의 리뷰</li>
+			  <li>학습 데이터 : 36006개 리뷰</li>
+			  <li>테스트 데이터 : 9001개 리뷰</li>
+			</ul>
+			<p>2. Hierarchical LSTM + UPA Model 구축</p>
+			<p>3. 구축한 모델에 데이터 학습 및 평점 예측 </p>
+		</div>
+	</div>
+</main>
+
+{% endblock %}
